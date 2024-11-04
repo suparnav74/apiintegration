@@ -10,22 +10,27 @@ import {
 } from "./ui/table";
 
 const CsToHvh = () => {
-  const [loading, setloading] = useState(false);
+
   const [steam, setsteam] = useState([]);
 
-  const updateCS = async () => {
+  const fetchData = async () => {
     let url = "https://api.cs2hvh.com/";
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
     console.log(parsedData.steam);
-    console.log(parsedData.steam[1]);
-    console.log(parsedData.steam.length);
+    //console.log(parsedData.steam[1]);
+    //console.log(parsedData.steam.length);
     setsteam(parsedData.steam);
   };
 
   useEffect(() => {
-    updateCS();
+    fetchData();
+    const refresh = setInterval(fetchData,60000);
+    return () => {
+      clearInterval(refresh);
+      console.log("refreshed")
+    }
   }, []);
 
   return (
@@ -44,9 +49,9 @@ const CsToHvh = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {steam.map((element) => {
+            {steam.map((element,index) => {
               return (
-                  <TableRow>
+                  <TableRow key={index}>
                     <TableCell className="font-medium">
                       {element.addr}
                     </TableCell>
