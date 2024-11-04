@@ -33,9 +33,10 @@ const CsToHvh = () => {
     }
   }, []);
 
+  const sortByPlayers = [...steam].sort((a,b)=>b.players-a.players);
   return (
     <div className="container">
-      <h1 className="text-5xl text-center mb-5">Cummunity Server List</h1>
+      <h1 className="text-5xl text-center mb-5 mt-7">cs2hvh.com</h1>
       <div>
         <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
@@ -49,7 +50,7 @@ const CsToHvh = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {steam.map((element,index) => {
+            {sortByPlayers.map((element,index) => {
               return (
                   <TableRow key={index}>
                     <TableCell className="font-medium">
